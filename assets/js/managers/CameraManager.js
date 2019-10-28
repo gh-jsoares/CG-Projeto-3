@@ -1,10 +1,10 @@
 'use strict'
 const ASPECT = Utils.getAspect()
-const ORTHO_NEAR = -500
-const ORTHO_FAR = 500
+const ORTHO_NEAR = 0
+const ORTHO_FAR = 23
 const PERSC_NEAR = 0.1
 const PERSC_FAR = 1500
-const FRUSTUM_SIZE = 70
+const FRUSTUM_SIZE = 15
 const FOV = 75
 
 class CameraManager {
@@ -17,7 +17,9 @@ class CameraManager {
         ]
 
         this.cameras[0].position.set(50, 50, 50)
-        this.cameras[1].position.set(50, 50, 50)
+        this.cameras[0].lookAt(0, 0, 0)
+        this.cameras[1].position.y = 14
+        this.cameras[1].lookAt(-23, 14, 0)
 
         this.switchView(0)
         this.registerEvents()
@@ -54,7 +56,6 @@ class CameraManager {
         else
             this.handlePerspectiveResize()
         
-        this.cameras[this.activeCamera].lookAt(0, 0, 0)
         this.cameras[this.activeCamera].updateProjectionMatrix()
         this.renderer.setSize(window.innerWidth, window.innerHeight)
     }
