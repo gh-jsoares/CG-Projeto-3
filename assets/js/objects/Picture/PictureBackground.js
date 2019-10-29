@@ -1,28 +1,24 @@
 'use strict'
 
-class Floor extends SceneObject {
+class PictureBackground extends SceneObject {
 
-    static get HEIGHT() {
-        return 2
-    }
-
-    static get LENGTH() {
-        return 50
-    }
-
-    constructor(x, y, z) {
+    constructor(x, y, z, length, height, width) {
         super(x, y, z)
         
         this.materials = {
             body: new THREE.MeshBasicMaterial({
-                color: 0x3DC1D3,
+                color: 0x303952,
                 wireframe: false
             })
         }
 
-        let geometry = new THREE.BoxGeometry(Floor.LENGTH, Floor.WIDTH, Floor.LENGTH)
+        let geometry = new THREE.BoxGeometry(length, height, width)
         let mesh = new THREE.Mesh(geometry, this.materials.body)
 
         this.objGroup.add(mesh)
+    }
+
+    addParent(parent) {
+        parent.add(this.objGroup)
     }
 }

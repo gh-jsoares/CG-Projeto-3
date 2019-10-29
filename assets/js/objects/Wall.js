@@ -20,7 +20,7 @@ class Wall extends SceneObject {
         
         this.materials = {
             body: new THREE.MeshBasicMaterial({
-                color: 0x6C5CE7,
+                color: 0xF5CD79,
                 wireframe: false
             })
         }

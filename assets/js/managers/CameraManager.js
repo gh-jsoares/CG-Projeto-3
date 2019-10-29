@@ -3,7 +3,7 @@ const ASPECT = Utils.getAspect()
 const ORTHO_NEAR = 0
 const ORTHO_FAR = 23
 const PERSC_NEAR = 0.1
-const PERSC_FAR = 1500
+const PERSC_FAR = 150
 const FRUSTUM_SIZE = 15
 const FOV = 75
 
