@@ -1,13 +1,13 @@
 'use strict'
 
-class Floor extends SceneObject {
+class SculptureFoot extends SceneObject {
+
+    static get RADIUS() {
+        return 1
+    }
 
     static get HEIGHT() {
         return 2
-    }
-
-    static get LENGTH() {
-        return 50
     }
 
     constructor(x, y, z) {
@@ -15,14 +15,15 @@ class Floor extends SceneObject {
         
         this.materials = {
             body: new THREE.MeshBasicMaterial({
-                color: 0x3DC1D3,
+                color: 0xA99F8F,
                 wireframe: false
             })
         }
 
-        let geometry = new THREE.BoxGeometry(Floor.LENGTH, Floor.HEIGHT, Floor.LENGTH)
+        let geometry = new THREE.CylinderGeometry(SculptureFoot.RADIUS, SculptureFoot.RADIUS * 2, SculptureFoot.HEIGHT, 6)
         let mesh = new THREE.Mesh(geometry, this.materials.body)
 
         this.objGroup.add(mesh)
     }
+
 }

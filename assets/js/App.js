@@ -11,12 +11,12 @@ class GraphicApp {
         this.sceneManager = new SceneManager()
         this.cameraManager = new CameraManager(this.renderer)
 
-        this.sceneManager.addObject(new Floor(0, 1, 0))
+        this.sceneManager.addObject(new Floor(0, 0, 0))
         this.sceneManager.addObject(new Wall(-24, 14, 0, true))
 
         this.sceneManager.addObject(new Picture(-23, 14, 0))
-        this.sceneManager.addObject(new Sculpture(0, 14, 0))
 
+        this.sceneManager.addObject(new Sculpture(0, 1, 0))
         
         this.controls = new THREE.OrbitControls(this.getCamera(), this.renderer.domElement)
         this.update()

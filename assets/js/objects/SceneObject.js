@@ -18,4 +18,9 @@ class SceneObject {
     update(deltatime) {
         
     }
+
+    addParent(parent) {
+        parent.add(this.objGroup)
+    }
+
 }

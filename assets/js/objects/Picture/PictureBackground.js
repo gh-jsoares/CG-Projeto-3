@@ -17,8 +17,4 @@ class PictureBackground extends SceneObject {
 
         this.objGroup.add(mesh)
     }
-
-    addParent(parent) {
-        parent.add(this.objGroup)
-    }
 }

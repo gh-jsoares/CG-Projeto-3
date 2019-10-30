@@ -32,10 +32,6 @@ class PictureGrid extends SceneObject {
         this.objGroup.position.z = 0.2
     }
 
-    addParent(parent) {
-        parent.add(this.objGroup)
-    }
-
     addBall(xOffset, yOffset, radius) {
         let geometry = new THREE.SphereGeometry(radius, 16, 16)
         let mesh = new THREE.Mesh(geometry, this.materials.ball)

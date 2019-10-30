@@ -17,11 +17,7 @@ class PictureFrame extends SceneObject {
         this.addHorizontalFrameBorder((height - width) / 2, length, width)
         this.addHorizontalFrameBorder(-(height - width) / 2, length, width)
     }
-
-    addParent(parent) {
-        parent.add(this.objGroup)
-    }
-
+    
     addVerticalFrameBorder(xOffset, height, width) {
         let geometry = new THREE.BoxGeometry(width, height, width)
         let mesh = new THREE.Mesh(geometry, this.materials.body)
