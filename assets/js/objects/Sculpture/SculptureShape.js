@@ -20,7 +20,7 @@ class SculptureShape extends SceneObject {
             }),
         }
 
-        this.createGeometry()
+        this.createGeometry(false)
     }
 
     update(deltatime) {
@@ -28,22 +28,23 @@ class SculptureShape extends SceneObject {
         this.objGroup.rotation.z += deltatime * 1
     }
 
-    createGeometry() {
+    createGeometry(debug) {
         let geometry = new THREE.Geometry()
         
         geometry.vertices = this.createVertices(SculptureShape.RADIUS)
         geometry.faces = this.createFaces()
 
-        geometry.vertices.forEach((v) => {
-            let geometry = new THREE.SphereGeometry(0.2 * SculptureShape.RADIUS, 16, 16)
-            let mesh = new THREE.Mesh(geometry, this.materials.ball1)
-    
-            mesh.position.x = v.x
-            mesh.position.y = v.y
-            mesh.position.z = v.z
-    
-            this.objGroup.add(mesh)
-        })
+        if(debug)
+            geometry.vertices.forEach((v) => {
+                let geometry = new THREE.SphereGeometry(0.2 * SculptureShape.RADIUS, 16, 16)
+                let point = new THREE.Mesh(geometry, this.materials.ball1)
+        
+                point.position.x = v.x
+                point.position.y = v.y
+                point.position.z = v.z
+        
+                this.objGroup.add(point)
+            })
         
 
         let mesh = new THREE.Mesh(geometry, this.materials.body)
