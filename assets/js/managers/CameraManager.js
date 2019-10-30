@@ -16,8 +16,8 @@ class CameraManager {
             new THREE.OrthographicCamera(-FRUSTUM_SIZE * ASPECT / 2, FRUSTUM_SIZE * ASPECT / 2, FRUSTUM_SIZE / 2, -FRUSTUM_SIZE / 2, ORTHO_NEAR, ORTHO_FAR)
         ]
 
-        this.cameras[0].position.set(50, 50, 50)
-        this.cameras[0].lookAt(0, 0, 0)
+        this.cameras[0].position.set(5, 18, 5)
+        this.cameras[0].lookAt(0, 14, 0)
         this.cameras[1].position.y = 14
         this.cameras[1].lookAt(-23, 14, 0)
 

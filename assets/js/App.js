@@ -17,6 +17,8 @@ class GraphicApp {
         this.sceneManager.addObject(new Picture(-23, 14, 0))
         this.sceneManager.addObject(new Sculpture(0, 14, 0))
 
+        
+        this.controls = new THREE.OrbitControls(this.getCamera(), this.renderer.domElement)
         this.update()
     }
 
@@ -24,6 +26,7 @@ class GraphicApp {
         this.renderer.setClearColor(0xDFE6E9)
         let deltatime = this.clock.getDelta()
 
+        this.controls.update()
         this.sceneManager.update(deltatime)
 
         this.render()

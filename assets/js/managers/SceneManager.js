@@ -3,6 +3,7 @@
 class SceneManager {
     constructor() {
         this.activeScene = new THREE.Scene()
+        this.activeScene.add(new THREE.AxesHelper(100))
 
         this.objects = []
     }
