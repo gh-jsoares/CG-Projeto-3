@@ -23,7 +23,7 @@ class Floor extends SceneObject {
             {
                 body: new THREE.MeshLambertMaterial({
                     color: 0x3DC1D3,
-                    wireframe: false
+                    wireframe: false,
                 })
             },
             {

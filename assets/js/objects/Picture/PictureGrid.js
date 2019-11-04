@@ -48,20 +48,20 @@ class PictureGrid extends SceneObject {
             this.addVerticalGrid(xOffset, height, 0.2)
             for(let j = 0; j < n; j++) {
                 xOffset = length / 2 - (j + 1) * length / (n + 1)
-                this.addBall(xOffset, yOffset, 0.2)
+                this.addBall(xOffset, yOffset, 0.17)
             }
         }
 
         this.objGroup.position.z = 0.2
     }
 
-    // CHANGE BALL TO CYLINDER
     addBall(xOffset, yOffset, radius) {
-        let geometry = new THREE.SphereGeometry(radius, 16, 16)
+        let geometry = new THREE.CylinderGeometry(radius, radius, 0.2, 16, 16)
         let mesh = new THREE.Mesh(geometry, this.materials[this.materialType].ball)
 
         mesh.position.x = xOffset
         mesh.position.y = yOffset
+        mesh.rotation.x = Math.PI / 2
 
         this.balls.push(mesh)
 

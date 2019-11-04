@@ -10,23 +10,44 @@ class Light extends SceneObject {
         return 2
     }
 
-    constructor(x, y, z, tx, ty, tz) {
+    constructor(x, y, z, tx = 0, ty = 0, tz = 0) {
         super(x, y, z)
         
-        this.materials = {
-            body: new THREE.MeshBasicMaterial({
-                color: 0x95AFC0,
-                wireframe: false
-            }),
-            bulb: new THREE.MeshBasicMaterial({
-                color: 0xF6E58D,
-                wireframe: false
-            })
-        }
+        this.materials = [
+            {
+                body: new THREE.MeshBasicMaterial({
+                    color: 0x95AFC0,
+                    wireframe: false
+                }),
+                bulb: new THREE.MeshBasicMaterial({
+                    color: 0xF6E58D,
+                    wireframe: false
+                })
+            },
+            {
+                body: new THREE.MeshLambertMaterial({
+                    color: 0x95AFC0,
+                    wireframe: false
+                }),
+                bulb: new THREE.MeshLambertMaterial({
+                    color: 0xF6E58D,
+                    wireframe: false
+                })
+            },
+            {
+                body: new THREE.MeshPhongMaterial({
+                    color: 0x95AFC0,
+                    wireframe: false
+                }),
+                bulb: new THREE.MeshPhongMaterial({
+                    color: 0xF6E58D,
+                    wireframe: false
+                })
+            }
+        ]
 
-        this.addBase()
-        this.addBulb()
-
+        this.base = this.addBase()
+        this.bulb = this.addBulb()
         this.addLight(tx, ty, tz)
     }
 
@@ -35,44 +56,52 @@ class Light extends SceneObject {
     }
 
     addToScene(scene) {
-        //super.addToScene(scene)
-        window.light = this.light
-        scene.add(window.light)
-        scene.add(window.light.target)
-        
-        console.log(window.light)
-
-        this.helper = new THREE.SpotLightHelper(window.light)
-        scene.add(this.helper)
+        super.addToScene(scene)
+        scene.add(this.light)
+        scene.add(this.light.target)
     }
 
     toggle() {
-        // TODO: Toggle Light
+        this.light.visible = !this.light.visible
     }
 
     addLight(tx, ty, tz) {
-        this.light = new THREE.SpotLight(0xFFFFFF, 200, 20, Math.PI / 12, 0)
+        this.light = new THREE.SpotLight(0xFFFFFF, 1.2, 0, Math.PI / 5, 0.33)
 
-        this.light.penumbra = .2
+        this.light.position.set(this.objGroup.position.x, this.objGroup.position.y - Light.HEIGHT, this.objGroup.position.z)
 
-        this.light.position.set(this.objGroup.position.x, this.objGroup.position.y, this.objGroup.position.z)
+        
+        if(tx != 0 || tz != 0) {
+            let angle = this.objGroup.position.angleTo(new THREE.Vector3(tx, ty, tz))
+            let sign = tx < this.objGroup.position.x ? -1 : 1
+            this.objGroup.rotation.z += sign * (angle - angle / 2 * angle / 2 * 1.3)
+            this.objGroup.position.y -= 2
+        }
 
-        this.light.target.position.set(tx, 0, tz)
+        tx = tx == 0 ? this.objGroup.position.x : tx
+        tz = tz == 0 ? this.objGroup.position.z : tz
+        this.light.target.position.set(tx, ty, tz)
     }
 
     addBase() {
         let geometry = new THREE.ConeGeometry(Light.RADIUS, Light.HEIGHT, 16)
-        let mesh = new THREE.Mesh(geometry, this.materials.body)
+        let mesh = new THREE.Mesh(geometry, this.materials[this.materialType].body)
         this.objGroup.add(mesh)
-
+        return mesh
     }
 
     addBulb() {
         let geometry = new THREE.SphereGeometry(Light.RADIUS * 2 / 3, 16, 16)
-        let mesh = new THREE.Mesh(geometry, this.materials.bulb)
+        let mesh = new THREE.Mesh(geometry, this.materials[this.materialType].bulb)
 
         mesh.position.y = -Light.HEIGHT + Light.RADIUS
 
         this.objGroup.add(mesh)
+        return mesh
+    }
+
+    updateMaterial() {
+        this.base.material = this.materials[this.materialType].body
+        this.bulb.material = this.materials[this.materialType].bulb
     }
 }

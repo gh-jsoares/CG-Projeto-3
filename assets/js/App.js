@@ -18,7 +18,10 @@ class GraphicApp {
 
         this.sceneManager.addObject(new Sculpture(0, 1, 0))
 
-        //this.sceneManager.addLight(new Light(0, 10, 0))
+        this.sceneManager.addLight(new Light(-5, 30, 5, -50))
+        this.sceneManager.addLight(new Light(-5, 30, -5, -50))
+        this.sceneManager.addLight(new Light(-7, 25, 0, 5))
+        this.sceneManager.addLight(new Light(7, 25, 0, -5))
         
         this.controls = new THREE.OrbitControls(this.getCamera(), this.renderer.domElement)
         this.update()

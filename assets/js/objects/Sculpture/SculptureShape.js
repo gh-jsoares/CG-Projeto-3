@@ -1,6 +1,7 @@
 'use strict'
 
-const DEBUG = true
+const DEBUG = false
+
 class SculptureShape extends SceneObject {
 
     static get RADIUS() {
