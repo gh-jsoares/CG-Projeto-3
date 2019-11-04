@@ -16,13 +16,6 @@ class Picture extends SceneObject {
 
     constructor(x, y, z) {
         super(x, y, z)
-        
-        this.materials = {
-            body: new THREE.MeshBasicMaterial({
-                color: 0xF9EFDF,
-                wireframe: false
-            })
-        }
 
         this.frame = new PictureFrame(0, 0, 0, Picture.LENGTH, Picture.HEIGHT, Picture.WIDTH * 2)
         this.frame.addParent(this.objGroup)
@@ -34,6 +27,24 @@ class Picture extends SceneObject {
         this.grid.addParent(this.objGroup)
 
         this.objGroup.rotation.y = Math.PI / 2
+    }
+
+    updateMaterial() {
+        this.frame.updateMaterial()
+        this.background.updateMaterial()
+        this.grid.updateMaterial()
+    }
+
+    toggleLightCalculations() {
+        this.frame.toggleLightCalculations()
+        this.background.toggleLightCalculations()
+        this.grid.toggleLightCalculations()
+    }
+
+    toggleShadingType() {
+        this.frame.toggleShadingType()
+        this.background.toggleShadingType()
+        this.grid.toggleShadingType()
     }
 
 }

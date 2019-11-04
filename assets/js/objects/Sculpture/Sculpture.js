@@ -22,4 +22,22 @@ class Sculpture extends SceneObject {
     update(deltatime) {
         this.shape.update(deltatime)
     }
+
+    updateMaterial() {
+        this.foot.updateMaterial()
+        this.leg.updateMaterial()
+        this.shape.updateMaterial()
+    }
+
+    toggleLightCalculations() {
+        this.foot.toggleLightCalculations()
+        this.leg.toggleLightCalculations()
+        this.shape.toggleLightCalculations()
+    }
+
+    toggleShadingType() {
+        this.foot.toggleShadingType()
+        this.leg.toggleShadingType()
+        this.shape.toggleShadingType()
+    }
 }

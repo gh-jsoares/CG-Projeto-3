@@ -1,5 +1,6 @@
 'use strict'
 
+const DEBUG = true
 class SculptureShape extends SceneObject {
 
     static get RADIUS() {
@@ -9,18 +10,40 @@ class SculptureShape extends SceneObject {
     constructor(x, y, z) {
         super(x, y, z)
         
-        this.materials = {
-            body: new THREE.MeshBasicMaterial({
-                color: 0xF9EFDF,
-                wireframe: false
-            }),
-            ball1: new THREE.MeshBasicMaterial({
-                color: 0xA9AFDF,
-                wireframe: false
-            }),
-        }
+        this.materials = [
+            {
+                body: new THREE.MeshBasicMaterial({
+                    color: 0xF9EFDF,
+                    wireframe: false
+                }),
+                ball1: new THREE.MeshBasicMaterial({
+                    color: 0xA9AFDF,
+                    wireframe: false
+                }),
+            },
+            {
+                body: new THREE.MeshLambertMaterial({
+                    color: 0xF9EFDF,
+                    wireframe: false
+                }),
+                ball1: new THREE.MeshLambertMaterial({
+                    color: 0xA9AFDF,
+                    wireframe: false
+                }),
+            },
+            {
+                body: new THREE.MeshPhongMaterial({
+                    color: 0xF9EFDF,
+                    wireframe: false
+                }),
+                ball1: new THREE.MeshPhongMaterial({
+                    color: 0xA9AFDF,
+                    wireframe: false
+                }),
+            }
+        ]
 
-        this.createGeometry(false)
+        this.createGeometry()
     }
 
     update(deltatime) {
@@ -28,26 +51,32 @@ class SculptureShape extends SceneObject {
         this.objGroup.rotation.z += deltatime * 1
     }
 
-    createGeometry(debug) {
+    createGeometry() {
         let geometry = new THREE.Geometry()
         
         geometry.vertices = this.createVertices(SculptureShape.RADIUS)
         geometry.faces = this.createFaces()
+        
+        geometry.computeFaceNormals()
+        geometry.computeVertexNormals()
 
-        if(debug)
+        if(DEBUG) {
+            this.points = []
             geometry.vertices.forEach((v) => {
                 let geometry = new THREE.SphereGeometry(0.2 * SculptureShape.RADIUS, 16, 16)
-                let point = new THREE.Mesh(geometry, this.materials.ball1)
+                let point = new THREE.Mesh(geometry, this.materials[this.materialType].ball1)
         
                 point.position.x = v.x
                 point.position.y = v.y
                 point.position.z = v.z
         
+                this.points.push(point)
+
                 this.objGroup.add(point)
             })
-        
+        }
 
-        let mesh = new THREE.Mesh(geometry, this.materials.body)
+        let mesh = new THREE.Mesh(geometry, this.materials[this.materialType].body)
         this.objGroup.add(mesh)
     }
 
@@ -98,5 +127,15 @@ class SculptureShape extends SceneObject {
         faces.push(new THREE.Face3(9, 8, 1))
         
         return faces
+    }
+
+    updateMaterial() {
+        this.objGroup.traverse((child) => {
+            child.material = this.materials[this.materialType].body
+        })
+        if(DEBUG)
+            this.points.forEach((point) => {
+                point.material = this.materials[this.materialType].ball1
+            })
     }
 }
