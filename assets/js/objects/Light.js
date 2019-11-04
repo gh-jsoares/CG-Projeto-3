@@ -15,32 +15,56 @@ class Light extends SceneObject {
         
         this.materials = [
             {
-                body: new THREE.MeshBasicMaterial({
-                    color: 0x95AFC0,
+                body_off: new THREE.MeshBasicMaterial({
+                    color: 0x130F40,
                     wireframe: false
                 }),
-                bulb: new THREE.MeshBasicMaterial({
+                body_on: new THREE.MeshBasicMaterial({
+                    color: 0x7ED6DF,
+                    wireframe: false
+                }),
+                bulb_off: new THREE.MeshBasicMaterial({
                     color: 0xF6E58D,
+                    wireframe: false
+                }),
+                bulb_on: new THREE.MeshBasicMaterial({
+                    color: 0xF9CA24,
                     wireframe: false
                 })
             },
             {
-                body: new THREE.MeshLambertMaterial({
-                    color: 0x95AFC0,
+                body_off: new THREE.MeshLambertMaterial({
+                    color: 0x130F40,
                     wireframe: false
                 }),
-                bulb: new THREE.MeshLambertMaterial({
+                body_on: new THREE.MeshLambertMaterial({
+                    color: 0x7ED6DF,
+                    wireframe: false
+                }),
+                bulb_off: new THREE.MeshLambertMaterial({
                     color: 0xF6E58D,
+                    wireframe: false
+                }),
+                bulb_on: new THREE.MeshLambertMaterial({
+                    color: 0xF9CA24,
                     wireframe: false
                 })
             },
             {
-                body: new THREE.MeshPhongMaterial({
-                    color: 0x95AFC0,
+                body_off: new THREE.MeshPhongMaterial({
+                    color: 0x130F40,
                     wireframe: false
                 }),
-                bulb: new THREE.MeshPhongMaterial({
+                body_on: new THREE.MeshPhongMaterial({
+                    color: 0x7ED6DF,
+                    wireframe: false
+                }),
+                bulb_off: new THREE.MeshPhongMaterial({
                     color: 0xF6E58D,
+                    wireframe: false
+                }),
+                bulb_on: new THREE.MeshPhongMaterial({
+                    color: 0xF9CA24,
                     wireframe: false
                 })
             }
@@ -63,6 +87,7 @@ class Light extends SceneObject {
 
     toggle() {
         this.light.visible = !this.light.visible
+        this.updateMaterial()
     }
 
     addLight(tx, ty, tz) {
@@ -85,14 +110,14 @@ class Light extends SceneObject {
 
     addBase() {
         let geometry = new THREE.ConeGeometry(Light.RADIUS, Light.HEIGHT, 16)
-        let mesh = new THREE.Mesh(geometry, this.materials[this.materialType].body)
+        let mesh = new THREE.Mesh(geometry, this.materials[this.materialType].body_on)
         this.objGroup.add(mesh)
         return mesh
     }
 
     addBulb() {
         let geometry = new THREE.SphereGeometry(Light.RADIUS * 2 / 3, 16, 16)
-        let mesh = new THREE.Mesh(geometry, this.materials[this.materialType].bulb)
+        let mesh = new THREE.Mesh(geometry, this.materials[this.materialType].bulb_on)
 
         mesh.position.y = -Light.HEIGHT + Light.RADIUS
 
@@ -101,7 +126,13 @@ class Light extends SceneObject {
     }
 
     updateMaterial() {
-        this.base.material = this.materials[this.materialType].body
-        this.bulb.material = this.materials[this.materialType].bulb
+        if(this.light.visible) {
+            this.base.material = this.materials[this.materialType].body_on
+            this.bulb.material = this.materials[this.materialType].bulb_on
+        }
+        else {
+            this.base.material = this.materials[this.materialType].body_off
+            this.bulb.material = this.materials[this.materialType].bulb_off
+        }
     }
 }
