@@ -23,7 +23,6 @@ class GraphicApp {
         this.sceneManager.addLight(new Light(-7, 25, 0, 5))
         this.sceneManager.addLight(new Light(7, 25, 0, -5))
         
-        this.controls = new THREE.OrbitControls(this.getCamera(), this.renderer.domElement)
         this.update()
     }
 
@@ -31,7 +30,6 @@ class GraphicApp {
         this.renderer.setClearColor(0xDFE6E9)
         let deltatime = this.clock.getDelta()
 
-        this.controls.update()
         this.sceneManager.update(deltatime)
 
         this.render()
